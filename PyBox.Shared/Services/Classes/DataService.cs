@@ -63,10 +63,36 @@ namespace PyBox.Shared.Services.Classes
             bool test = _database.Where(d => d.Title == title && d.DeletedAt == null).Any();
             return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = test };
         }
-
-        public async Task<IScriptDataServiceResponse> CreateScript(ScriptDefinition scriptDefinition)
+        public async Task<IScriptDataServiceResponse> GetScripts()
         {
-            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
+            return new ScriptDataServiceResponse()
+            {
+                ErrorLevel = Enums.WarningLevel.NO_WARNING,
+                Errors = null,
+                Result = _database.Select(d => d.GetView()).ToList()
+            };
+        }
+
+        public async Task<IScriptDataServiceResponse> CreateScript(ScriptDefinition input)
+        {
+            if (_database.Where(d => d.Title == input.Title && d.DeletedAt != null).Any())
+            {
+                return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This Title already exists", Result = null };
+            }
+            _database.Add(
+                new ScriptEntity()
+                {
+                    ScriptId = _database.Any() ? _database.Max(d => d.ScriptId) + 1 : 0,
+                    Title = input.Title,
+                    Description = input.Description,
+                    ScriptText = "import sys\n\nargs = sys.argv\nprint(f'Hello {args[1]}')\n",
+                    Enabled = true,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = null,
+                    DeletedAt = null
+                }
+            );
+            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = _database.Last().GetEdit() };
         }
 
         public async Task<IScriptDataServiceResponse> DeleteScript(int id)
@@ -75,11 +101,6 @@ namespace PyBox.Shared.Services.Classes
         }
 
         public async Task<IScriptDataServiceResponse> GetScript(int id)
-        {
-            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
-        }
-
-        public async Task<IScriptDataServiceResponse> GetScripts()
         {
             return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
         }

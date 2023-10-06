@@ -3,7 +3,6 @@
     public enum WarningLevel
     {
         NO_WARNING,
-        INFORMATION,
         WARNING,
         ERROR
     }

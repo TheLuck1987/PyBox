@@ -1,9 +1,10 @@
-﻿@if (Items != null)
+﻿@inject IScriptDataService DataService
+
+@if (Items != null)
 {
     <h3>Scripts</h3>
     <br />
-    @* <button type="button" class="btn mx-2 btn-primary" title="Create new script" @onclick="OnCreateRequest"><span class="oi oi-plus" /> Create new cript</button> *@
-    @* <ModalCreateNewScript NewItem=@newItem WarningMessage=@modalWarningMessage ErrorMessage=@modalErrorMessage OnExit=@OnExit /> *@
+    <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=OnCreateRequest><span class="oi oi-plus" /> Create new cript</button>
     <br />
     <br />
     @if (Items.Count == 0)
@@ -41,13 +42,27 @@
         </div>
         @foreach (var item in Items)
         {
-            <ScriptsLine Item=@item />
+            <ScriptsTableLine Item=@item />
         }
     }
-}
-
-@code {
-    [Parameter]
-    public List<ScriptView>? Items { get; set; }
-
+    @if (showNewScriptModal)
+    {
+        <ModalForm Title="Create new Script" ConfirmLable="Create" FormObject=@newItem FormAlertClass=@modalErrorClass FormAlertMessage=@modalErrorMessage OnExit=@OnCreateEnd>
+            <FormContent>
+                <div class="form-group">
+                    <label>Title</label>
+                    <InputText @bind-Value="newItem!.Title" class="form-control" />
+                    <ValidationMessage For="@(() => newItem.Title)" />
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <InputTextArea @bind-Value="newItem.Description" class="form-control" />
+                    <ValidationMessage For="@(() => newItem.Description)" />
+                </div>
+            </FormContent>
+            <FormValidator>
+                <NewScriptValidatorProvider />
+            </FormValidator>
+        </ModalForm>
+    }
 }

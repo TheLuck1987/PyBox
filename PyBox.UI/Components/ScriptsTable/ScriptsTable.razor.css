@@ -1,0 +1,10 @@
+﻿.lits-titles {
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid black !important;
+}
+@media (max-width: 1200px) {
+    .lits-titles {
+        border-bottom: 1px solid #dee2e6;
+    }
+}
