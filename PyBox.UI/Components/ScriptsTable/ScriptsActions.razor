@@ -1,0 +1,86 @@
+﻿@if (Item != null)
+{
+    <div class="row gx-1 justify-content-center">
+        <div class="col-3">
+            <button type="button"
+                class="btn mx-auto d-block btn-outline-success btn-sm"
+                @onclick="@(() => null)"
+                disabled="@(!Item.Enabled)"
+                title="Run this script">
+                <span class="oi oi-media-play" />
+            </button>
+        </div>
+        <div class="col-3">
+    @if (ShowEditButton)
+    {
+            <button type="button"
+                        class="btn mx-auto d-block btn-outline-primary btn-sm"
+                @onclick="@(() => OnEdit.InvokeAsync(Item.ScriptId))"
+                title="Edit this script">
+                <span class="oi oi-pencil" />
+            </button>
+    }
+        </div>
+        <div class="col-3">
+            <button type="button"
+                    class="btn mx-auto d-block @(Item.Enabled ? "btn-outline-warning" : "btn-outline-info") btn-sm"
+                @onclick="@(() => OnStatusChange.InvokeAsync(Item))"
+                title="@(Item.Enabled ? "Disable this script" : "Enable this script")">
+                <span class="oi oi-lock-@(Item.Enabled ? "locked" : "unlocked")" />
+            </button>
+        </div>
+        <div class="col-3">
+            <button type="button"
+                    class="btn mx-auto d-block btn-outline-danger btn-sm"
+                @onclick="@(() => OnDeleteRequest(Item))"
+                title="Delete this script">
+                <span class="oi oi-trash" />
+            </button>
+        </div>
+    </div>
+        @* <Confirm ModalId=@confirmId
+            CancellationLable="Confirm"
+            ConfirmCssColor="danger"
+            Message=@confirmMessage
+            OnExit=@OnDeleteConfirmed
+        /> *@
+}
+@code {
+    #region Inputs
+    [Parameter]
+    public ScriptView? Item { get; set; }
+
+    [Parameter]
+    public bool ShowEditButton { get; set; } = true;
+
+    [Parameter]
+    public bool ShowSmallButtons { get; set; }
+
+    [Parameter]
+    public string CssClasses { get; set; } = "";
+    #endregion
+
+    private string confirmId = $"modal-{Guid.NewGuid()}";
+    private string confirmMessage => Item != null ? $"Are you sure you want to delete {Item.Title}?" : "Are you sure you want to delete this item?";
+
+    private async Task OnDeleteRequest(ScriptView item)
+    {
+       // await ModalService.ShowModal(confirmId);
+    }
+
+    private async Task OnDeleteConfirmed(bool abort)
+    {
+        // await ModalService.HideModal(confirmId);
+        // if (!abort)
+        //     await OnDelete.InvokeAsync(Item);
+    }
+
+    #region Ouputs
+    [Parameter]
+    public EventCallback<ScriptView> OnStatusChange { get; set; }
+    [Parameter]
+    public EventCallback<int> OnEdit { get; set; }
+    [Parameter]
+    public EventCallback<ScriptView> OnDelete { get; set; }
+    #endregion
+}

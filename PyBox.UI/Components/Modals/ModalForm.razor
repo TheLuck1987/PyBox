@@ -1,0 +1,33 @@
+﻿@if (Title != null && FormContent != null && FormObject != null)
+{
+    <Modal Title=@Title ModalBody=@FormContent FormValidator=@FormValidator ConfirmLable=@ConfirmLable ConfirmCssColor=@ConfirmColor FormObject=@FormObject 
+        FormAlertClass=@FormAlertClass FormAlertMessage=@FormAlertMessage HideCancelButton=false OnExit=@OnExit ModalIsForm=true />
+}
+
+@code {
+    #region Inputs
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public RenderFragment? FormContent { get; set; }
+    [Parameter]
+    public RenderFragment? FormValidator { get; set; }
+    [Parameter]
+    public string? ConfirmLable { get; set; }
+    [Parameter]
+    public string? ConfirmColor { get; set; } = "primary";
+    [Parameter]
+    public object? FormObject { get; set; } = null;
+    [Parameter]
+    public string? FormAlertClass { get; set; } = null;
+    [Parameter]
+    public string? FormAlertMessage { get; set; } = null;
+    #endregion
+
+    private string? alertClass = null;
+
+    #region Outputs
+    [Parameter]
+    public EventCallback<ModalResult> OnExit { get; set; }
+    #endregion
+}

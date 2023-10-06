@@ -1,0 +1,21 @@
+﻿@page "/"
+
+@inject IScriptDataService DataService
+
+<PageTitle>Index</PageTitle>
+
+@if (items != null)
+{
+    <ScriptsTable Items="items" />
+}
+
+@code {
+    private List<ScriptView>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DataService.GetScripts();
+
+        await base.OnInitializedAsync();
+    }
+}

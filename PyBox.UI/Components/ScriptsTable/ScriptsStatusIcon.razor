@@ -1,0 +1,12 @@
+﻿@if (Item != null)
+{
+    <span 
+        class="oi oi-lock-@(Item.Enabled ? "unlocked text-success" : "locked text-danger")"
+        style="cursor: help;"
+          title="@(Item.Enabled ? "Execution ENABLED" : "Execution DISABLED")" />
+}
+
+@code {
+    [Parameter]
+    public ScriptView? Item { get; set; }
+}

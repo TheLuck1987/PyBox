@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.Client", "PyBox.Client\PyBox.Client.csproj", "{5969A32D-7D01-4A00-8F07-F002D8799A61}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.Shared", "PyBox.Shared\PyBox.Shared.csproj", "{8587F7F1-B358-4434-B55A-2A7771327BD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.API", "PyBox.API\PyBox.API.csproj", "{3F0BCAA3-A916-4AD9-99AB-727E08460495}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.PyRunner", "PyBox.PyRunner\PyBox.PyRunner.csproj", "{D3A5F165-50DC-473F-A227-FC14430EDC2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.UI", "PyBox.UI\PyBox.UI.csproj", "{6F8D4ABD-0FDD-442F-BBBD-44FAD3D7121E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PyBox.UI.Examples", "PyBox.UI.Examples\PyBox.UI.Examples.csproj", "{AD7D82CA-2877-48F5-8D9C-3B3D93438E95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5969A32D-7D01-4A00-8F07-F002D8799A61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5969A32D-7D01-4A00-8F07-F002D8799A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5969A32D-7D01-4A00-8F07-F002D8799A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5969A32D-7D01-4A00-8F07-F002D8799A61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8587F7F1-B358-4434-B55A-2A7771327BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8587F7F1-B358-4434-B55A-2A7771327BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8587F7F1-B358-4434-B55A-2A7771327BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8587F7F1-B358-4434-B55A-2A7771327BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0BCAA3-A916-4AD9-99AB-727E08460495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0BCAA3-A916-4AD9-99AB-727E08460495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0BCAA3-A916-4AD9-99AB-727E08460495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0BCAA3-A916-4AD9-99AB-727E08460495}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A5F165-50DC-473F-A227-FC14430EDC2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A5F165-50DC-473F-A227-FC14430EDC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A5F165-50DC-473F-A227-FC14430EDC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A5F165-50DC-473F-A227-FC14430EDC2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F8D4ABD-0FDD-442F-BBBD-44FAD3D7121E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8D4ABD-0FDD-442F-BBBD-44FAD3D7121E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F8D4ABD-0FDD-442F-BBBD-44FAD3D7121E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8D4ABD-0FDD-442F-BBBD-44FAD3D7121E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7D82CA-2877-48F5-8D9C-3B3D93438E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7D82CA-2877-48F5-8D9C-3B3D93438E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7D82CA-2877-48F5-8D9C-3B3D93438E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7D82CA-2877-48F5-8D9C-3B3D93438E95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FCD7DA6-BA7A-4D50-B443-66DD3BCB3BBA}
+	EndGlobalSection
+EndGlobal

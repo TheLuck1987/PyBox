@@ -1,0 +1,39 @@
+﻿@if (Title != null)
+{
+    <Modal HideCancelButton=true Title=@Title OnExit=@OnExit>
+        <ModalBody>
+            @if (Message != null)
+            {
+                @for (int i = 0; i < messages.Length - 1; i++)
+                {
+                    @messages[i]<br /> 
+                }
+                @messages[messages.Length - 1]
+            }
+        </ModalBody>
+    </Modal>
+
+}
+
+@code {
+    #region Inputs
+    [Parameter]
+    public string? Title { get; set; }
+    [Parameter]
+    public string? Message { get; set; }
+    #endregion
+
+    private string[] messages = new string[0];
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Message != null)
+            messages = Message.Split('\n');
+        await base.OnInitializedAsync();
+    }
+
+    #region Outputs
+    [Parameter]
+    public EventCallback<ModalResult> OnExit { get; set; }
+    #endregion
+}

@@ -1,0 +1,53 @@
+﻿@if (Items != null)
+{
+    <h3>Scripts</h3>
+    <br />
+    @* <button type="button" class="btn mx-2 btn-primary" title="Create new script" @onclick="OnCreateRequest"><span class="oi oi-plus" /> Create new cript</button> *@
+    @* <ModalCreateNewScript NewItem=@newItem WarningMessage=@modalWarningMessage ErrorMessage=@modalErrorMessage OnExit=@OnExit /> *@
+    <br />
+    <br />
+    @if (Items.Count == 0)
+    {
+        <p><em>No scripts saved in the database...</em></p>
+    }
+    else
+    {
+        <div class="row gx-1 lits-titles">
+            <div class="p-2 d-none d-xl-block col-xl-6">
+                <div class="row">
+                    <div class="p-2 d-none d-xl-block col-xl-4">
+                        Title
+                    </div>
+                    <div class="p-2 d-none d-xl-block col-xl-8">
+                        Description
+                    </div>
+                </div>
+            </div>
+            <div class="p-2 d-none d-xl-block col-xl-6">
+                <div class="row">
+                    <div class="p-2 col-xl-1">
+                        Status
+                    </div>
+                    <div class="p-2 col-xl-3">
+                        Created
+                    </div>
+                    <div class="p-2 col-xl-3">
+                        Updated
+                    </div>
+                    <div class="p-2 col-xl-5">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @foreach (var item in Items)
+        {
+            <ScriptsLine Item=@item />
+        }
+    }
+}
+
+@code {
+    [Parameter]
+    public List<ScriptView>? Items { get; set; }
+
+}
