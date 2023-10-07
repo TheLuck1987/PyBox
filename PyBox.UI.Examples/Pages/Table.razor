@@ -1,0 +1,26 @@
+﻿@page "/table"
+
+@inject IScriptDataService DataService
+
+<PageTitle>Index</PageTitle>
+@if (errorMessage != null)
+{
+    <div class="alert alert-@errorClass" role="alert">
+        @errorMessage
+    </div>
+}
+else
+{
+    <ScriptsTable OnError=@OnTableError />
+}
+
+@code {
+    private string? errorClass = null;
+    private string? errorMessage = null;
+
+    private void OnTableError(ScriptDataServiceResponse response)
+    {
+        errorClass = response.ErrorLevel == WarningLevel.WARNING ? "warning" : "danger";
+        errorMessage = response.Errors;
+    }
+}

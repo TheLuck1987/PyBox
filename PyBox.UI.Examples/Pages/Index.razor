@@ -1,27 +1,48 @@
-﻿@page "/"
+﻿@inject IJSRuntime JSRuntime
 
-
-@inject IScriptDataService DataService
-
-<PageTitle>Index</PageTitle>
-@if (errorMessage != null)
-{
-    <div class="alert alert-@errorClass" role="alert">
-        @errorMessage
-    </div>
-}
-else
-{
-    <ScriptsTable OnError=@OnTableError />
-}
+@page "/"
+<div class="row full-height">
+	<div class="col-6">
+		<StandaloneCodeEditor 
+			ConstructionOptions="EditorConstructionOptions"
+			OnDidInit="EditorOnDidInit" />
+	</div>
+	<div class="col-6" style="background-color: pink;">
+		<div class="row mid-height">
+			<div class="col-12" style="background-color: orange;">
+				Command area
+			</div>
+		</div>
+		<div class="row mid-height">
+			<div class="col-12" style="background-color: red;">
+				Output area
+			</div>
+		</div>
+	</div>
+	@* <div class="col-6">
+		<div class="row">
+			<div class="col-6">
+				Command area
+			</div>
+			<div class="col-6">
+				Output area
+			</div>
+		</div>
+	</div> *@
+</div>
 
 @code {
-    private string? errorClass = null;
-    private string? errorMessage = null;
-
-    private void OnTableError(ScriptDataServiceResponse response)
+	private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+	{
+		return new StandaloneEditorConstructionOptions
+			{
+				AutomaticLayout = true,
+				Language = "csharp",
+				Value = "public void SayHello()\n{\n   Console.WriteLine(\"Hello world!\");\n}"
+			};
+	}
+    private async Task EditorOnDidInit()
     {
-        errorClass = response.ErrorLevel == WarningLevel.WARNING ? "warning" : "danger";
-        errorMessage = response.Errors;
+			await BlazorMonaco.Editor.Global.SetTheme(JSRuntime, "vs-dark");
     }
 }
