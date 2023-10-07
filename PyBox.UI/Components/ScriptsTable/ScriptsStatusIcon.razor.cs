@@ -8,6 +8,8 @@ namespace PyBox.UI.Components.ScriptsTable
         #region Inputs
         [Parameter]
         public ScriptView? Item { get; set; }
+        [Parameter]
+        public bool Deleting { get; set; } = false;
         #endregion
     }
 }

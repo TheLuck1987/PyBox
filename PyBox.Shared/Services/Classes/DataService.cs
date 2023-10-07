@@ -94,10 +94,17 @@ namespace PyBox.Shared.Services.Classes
             );
             return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = _database.Last().GetEdit() };
         }
+        public async Task<IScriptDataServiceResponse> ToggleStatus(int id)
+        {
+            _database.Where(d => d.ScriptId == id).First().Enabled = !_database.Where(d => d.ScriptId == id).First().Enabled;
+            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = true };
+        }
 
         public async Task<IScriptDataServiceResponse> DeleteScript(int id)
         {
-            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
+            Thread.Sleep(20000);
+            _database.Remove(_database.Where(d => d.ScriptId == id).First());
+            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = true };
         }
 
         public async Task<IScriptDataServiceResponse> GetScript(int id)
@@ -109,5 +116,6 @@ namespace PyBox.Shared.Services.Classes
         {
             return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
         }
+
     }
 }

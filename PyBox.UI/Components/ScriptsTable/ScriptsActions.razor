@@ -1,12 +1,16 @@
-﻿@if (Item != null)
+﻿@inject IScriptDataService DataService
+@if (Item != null)
 {
     <div class="row gx-1 justify-content-center">
         <div class="col-3">
             <button type="button"
-                class="btn mx-auto d-block btn-outline-success btn-sm"
-                @onclick="@(() => null)"
-                disabled="@(!Item.Enabled)"
-                title="Run this script">
+                    class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "success") btn-sm"
+                    @onclick="@(() => null)"
+                    disabled="@(!Item.Enabled || disabled)"
+                    title="Run this script"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                >
                 <span class="oi oi-media-play" />
             </button>
         </div>
@@ -14,34 +18,43 @@
     @if (ShowEditButton)
     {
             <button type="button"
-                        class="btn mx-auto d-block btn-outline-primary btn-sm"
-                @onclick="@(() => OnEdit.InvokeAsync(Item.ScriptId))"
-                title="Edit this script">
+                    class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "primary") btn-sm"
+                    @onclick="@(() => OnEdit.InvokeAsync())"
+                    title="Edit this script"
+                    disabled=@disabled>
                 <span class="oi oi-pencil" />
             </button>
     }
         </div>
         <div class="col-3">
             <button type="button"
-                    class="btn mx-auto d-block @(Item.Enabled ? "btn-outline-warning" : "btn-outline-info") btn-sm"
-                @onclick="@(() => OnStatusChange.InvokeAsync(Item))"
-                title="@(Item.Enabled ? "Disable this script" : "Enable this script")">
+                    class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : Item.Enabled ? "warning" : "info") btn-sm"
+                    @onclick="@(() => OnStatusChange.InvokeAsync(Item))"
+                    title="@(Item.Enabled ? "Disable this script" : "Enable this script")"
+                    disabled=@disabled>
                 <span class="oi oi-lock-@(Item.Enabled ? "locked" : "unlocked")" />
             </button>
         </div>
         <div class="col-3">
             <button type="button"
                     class="btn mx-auto d-block btn-outline-danger btn-sm"
-                @onclick="@(() => OnDeleteRequest(Item))"
-                title="Delete this script">
-                <span class="oi oi-trash" />
+                    @onclick="@(() => OnDeleteRequest())"
+                    title="Delete this script"
+                    disabled=@disabled>
+                @if (onDeleting)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                }
+                else
+                {
+                    <span class="oi oi-trash" />
+                }
             </button>
         </div>
     </div>
-        @* <Confirm ModalId=@confirmId
-            CancellationLable="Confirm"
-            ConfirmCssColor="danger"
-            Message=@confirmMessage
-            OnExit=@OnDeleteConfirmed
-        /> *@
+
+    @if (sowDeleteConfirm)
+    {
+        <ModalConfirm Title="Are you sure?" Message=@confirmMessage ConfirmLable="Confirm" ButtonColor="danger" OnExit=@confirmRequestClosed />
+    }
 }

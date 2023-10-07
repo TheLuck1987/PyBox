@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using PyBox.Shared.Models.Script;
+using PyBox.Shared.Services.Interfaces;
+using PyBox.UI.Components.Modals;
 
 namespace PyBox.UI.Components.ScriptsTable
 {
@@ -14,33 +16,52 @@ namespace PyBox.UI.Components.ScriptsTable
 
         [Parameter]
         public bool ShowSmallButtons { get; set; }
-
-        [Parameter]
-        public string CssClasses { get; set; } = "";
         #endregion
 
         #region Ouputs
         [Parameter]
         public EventCallback<ScriptView> OnStatusChange { get; set; }
         [Parameter]
-        public EventCallback<int> OnEdit { get; set; }
+        public EventCallback OnEdit { get; set; }
         [Parameter]
-        public EventCallback<ScriptView> OnDelete { get; set; }
+        public EventCallback<ScriptView> OnItemDeleting { get; set; }
+        [Parameter]
+        public EventCallback<ScriptView> OnDeleted { get; set; }
         #endregion
 
-        private string confirmId = $"modal-{Guid.NewGuid()}";
+        private bool sowDeleteConfirm = false;
         private string confirmMessage => Item != null ? $"Are you sure you want to delete {Item.Title}?" : "Are you sure you want to delete this item?";
 
-        private async Task OnDeleteRequest(ScriptView item)
-        {
-            // await ModalService.ShowModal(confirmId);
-        }
+        private bool disabled = false;
+        private bool onDeleting = false;
 
-        private async Task OnDeleteConfirmed(bool abort)
+        private async Task confirmRequestClosed(ModalResult result)
         {
-            // await ModalService.HideModal(confirmId);
-            // if (!abort)
-            //     await OnDelete.InvokeAsync(Item);
+            sowDeleteConfirm = false;
+            if (!result.CancelClicked)
+            {
+                disabled = true;
+                onDeleting = true;
+                await OnItemDeleting.InvokeAsync(Item);
+                int id = Item!.ScriptId;
+                IScriptDataService _dataService = DataService;
+                await Task.Run(async () =>
+                {
+                    await _dataService.DeleteScript(id);
+                    await InvokeAsync(new Action(itemDeleted));
+                }).ConfigureAwait(false);
+            }
+        }
+        private void itemDeleted()
+        {
+            disabled = false;
+            onDeleting = false;
+            StateHasChanged();
+            OnDeleted.InvokeAsync(Item);
+        }
+        private void OnDeleteRequest()
+        {
+            sowDeleteConfirm = true;
         }
     }
 }

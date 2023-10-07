@@ -1,13 +1,13 @@
 ﻿@inject IScriptDataService DataService
 
-@if (Items != null)
+@if (items != null)
 {
     <h3>Scripts</h3>
     <br />
     <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=OnCreateRequest><span class="oi oi-plus" /> Create new cript</button>
     <br />
     <br />
-    @if (Items.Count == 0)
+    @if (items.Count == 0)
     {
         <p><em>No scripts saved in the database...</em></p>
     }
@@ -40,9 +40,39 @@
                 </div>
             </div>
         </div>
-        @foreach (var item in Items)
+        @foreach (var item in items)
         {
-            <ScriptsTableLine Item=@item />
+            <div class="row gx-1 list-row align-items-center@(itemOnDeleting != null && itemOnDeleting == item ? " deleting" : !item.Enabled ? " disabled": "")">
+                <div class="p-2 col-xl-2 col-lg-4 col-md-12">
+                    <span class="d-inline d-xl-none"><ScriptsStatusIcon Item="@item" Deleting=@(itemOnDeleting != null && itemOnDeleting == item) /></span>
+                    <span class="item-title">@item.Title</span>
+                </div>
+                <div class="p-2 col-xl-4 col-lg-8 col-md-12">
+                    @item.Description
+                </div>
+                <div class="p-2 col-xl-6 col-lgx-12">
+                    <div class="row gx-1 align-items-center">
+                        <div class="p-2 col-xl-1 d-none d-xl-block">
+                            <ScriptsStatusIcon Item="@item" Deleting=@(itemOnDeleting != null && itemOnDeleting == item) />
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12">
+                            <span class="d-inline d-xl-none item-subtitle">Created:</span>
+                            <span class="item-date">@item.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</span>
+                        </div>
+                        <div class="col-xl-3 col-lg-5 col-md-12">
+                            <span class="d-inline d-xl-none item-subtitle">Updated:</span>
+                            <span class="item-date">@(item.UpdatedAt == null ? "-" : ((DateTime)item.UpdatedAt).ToString("dd/MM/yyyy HH:mm:ss"))</span>
+                        </div>
+                        <div class="col-xl-5 col-lg-3 col-md-12">
+                            <ScriptsActions 
+                                Item=@item 
+                                OnItemDeleting=@OnItemDeleting 
+                                OnDeleted=@OnItemDeleted 
+                                OnStatusChange=@OnItemStatusChange />
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     }
     @if (showNewScriptModal)

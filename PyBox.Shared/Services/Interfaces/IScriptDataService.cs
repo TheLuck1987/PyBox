@@ -6,6 +6,7 @@ namespace PyBox.Shared.Services.Interfaces
     {
         public Task<IScriptDataServiceResponse> GetScripts();
         public Task<IScriptDataServiceResponse> CheckTitle(string title);
+        public Task<IScriptDataServiceResponse> ToggleStatus(int id);
         public Task<IScriptDataServiceResponse> GetScript(int id);
         public Task<IScriptDataServiceResponse> CreateScript(ScriptDefinition scriptDefinition);
         public Task<IScriptDataServiceResponse> UpdateScript(int id, ScriptEdit scriptTableItem);

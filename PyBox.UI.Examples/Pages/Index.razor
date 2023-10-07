@@ -10,31 +10,18 @@
         @errorMessage
     </div>
 }
-else if (items != null)
+else
 {
-    <ScriptsTable Items="items" />
+    <ScriptsTable OnError=@OnTableError />
 }
 
 @code {
-    private List<ScriptView>? items = null;
     private string? errorClass = null;
     private string? errorMessage = null;
 
-    protected override async Task OnInitializedAsync()
+    private void OnTableError(ScriptDataServiceResponse response)
     {
-        var data = await DataService.GetScripts();
-        if (data == null || data.Result == null || (data.ErrorLevel != WarningLevel.NO_WARNING && data.Errors == null))
-        {
-            errorClass = "danger";
-            errorMessage = "Unhandled exception";
-        }
-        else if (data.ErrorLevel !=WarningLevel.NO_WARNING)
-        {
-            errorClass = data.ErrorLevel == WarningLevel.WARNING ? "warning" : "danger";
-            errorMessage = "Unhandled exception";
-        }
-        else
-            items = (List<ScriptView>?)data.Result;
-        await base.OnInitializedAsync();
+        errorClass = response.ErrorLevel == WarningLevel.WARNING ? "warning" : "danger";
+        errorMessage = response.Errors;
     }
 }
