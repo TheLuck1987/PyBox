@@ -1,0 +1,17 @@
+﻿<div class="alert alert-@errorClass" role="alert">
+    @errorMessage
+</div>
+
+@code {
+    [Parameter]
+    public IScriptDataServiceResponse? ErrorResponse { get; set; }
+
+    private string? errorClass = null;
+    private string? errorMessage = null;
+
+    protected override void OnInitialized()
+    {
+        errorClass = ErrorResponse == null || ErrorResponse.ErrorLevel != WarningLevel.WARNING ? "danger" : "warning";
+        errorMessage = ErrorResponse == null ? "Unhandled error" : ErrorResponse.Errors;
+    }
+}

@@ -1,0 +1,50 @@
+﻿@page "/edit/{StringId}"
+
+@inject IScriptDataService DataService
+
+<PageTitle>PyBox Editor</PageTitle>
+@if (errorResponse != null)
+{
+    <ErrorViewers ErrorResponse="errorResponse" />
+}
+else if (item != null)
+{
+	<EditorComponent Item=@item />
+}
+
+@code {
+    [Parameter]
+    public string? StringId { get; set; }
+
+    private int id = -1;
+    private ScriptEdit? item = null;
+
+    private bool showError = false;
+    private ScriptDataServiceResponse? errorResponse = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (StringId != null)
+        {
+            var data = await DataService.GetScript(int.Parse(StringId));
+            data = await CheckData(data);
+            if (data == null)
+                return;
+            item = (ScriptEdit?)data.Result;
+        }
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task<ScriptDataServiceResponse?> CheckData(IScriptDataServiceResponse? data)
+    {
+        if (data == null || data.Result == null || data.ErrorLevel != WarningLevel.NO_WARNING)
+        {
+            string message = data == null || data.Errors == null ? "Unhandled exception" : data.Errors;
+            WarningLevel level = data == null || data.ErrorLevel == WarningLevel.NO_WARNING ? WarningLevel.ERROR : data.ErrorLevel;
+            errorResponse = new ScriptDataServiceResponse() { Result = null, ErrorLevel = level, Errors = message };
+            return null;
+        }
+        return (ScriptDataServiceResponse)data;
+    }
+}

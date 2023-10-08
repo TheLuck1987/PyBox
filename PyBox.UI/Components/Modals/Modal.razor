@@ -1,14 +1,20 @@
 ﻿<div class="modal" tabindex="-1" role="dialog" style="display: block;">
-    @if (!ModalIsForm)
-    {
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">@Title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(() => Close(true))"></button>
-                </div>
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" @onclick="@(() => CloseForm(true))"></button>
+            </div>
+            @if (!ModalIsForm)
+            {
                 <div class="modal-body">
                     @ModalBody
+                    @if (FormAlertClass != null && FormAlertMessage != null)
+                    {
+                        <div class="alert alert-@FormAlertClass mt-2" role="alert">
+                            @FormAlertMessage
+                        </div>
+                    }
                 </div>
                 <div class="modal-footer">
                     @if (!HideCancelButton)
@@ -17,17 +23,9 @@
                     }
                     <button type="button" class="btn btn-@ConfirmCssColor" @onclick="@(() => Close(false))">@ConfirmLable</button>
                 </div>
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">@Title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick="@(() => CloseForm(true))"></button>
-                </div>
+            }
+            else
+            {
                 @if (FormObject != null && ModalBody != null)
                 {
                     <EditForm Model=@FormObject OnValidSubmit=@(() => CloseForm(false))>
@@ -41,6 +39,12 @@
                         }
                         <div class="modal-body">
                             @ModalBody
+                            @if (FormAlertClass != null && FormAlertMessage != null)
+                            {
+                                <div class="alert alert-@FormAlertClass mt-2" role="alert">
+                                    @FormAlertMessage
+                                </div>
+                            }
                         </div>
                         <div class="modal-footer">
                             @if (!HideCancelButton)
@@ -60,13 +64,7 @@
                         <button type="button" class="btn btn-danger" @onclick="@(() => CloseForm(false))">Close</button>
                     </div>
                 }
-                @if (FormAlertClass != null && FormAlertMessage != null)
-                {
-                    <div class="alert alert-@FormAlertClass" role="alert">
-                        @FormAlertMessage
-                    </div>
-                }
-            </div>
+            }
         </div>
-    }
+     </div>
 </div>

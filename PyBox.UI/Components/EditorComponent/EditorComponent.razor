@@ -1,0 +1,37 @@
+﻿@inject IJSRuntime JSRuntime
+@inject IScriptDataService DataService
+@if (Item != null)
+{
+	<div class="row gx-1">
+		<div class="text-warning">
+			@Item.Title<span class="oi oi-pencil text-primary mx-2" style="cursor: pointer;"/>
+		</div>
+	</div>
+	<div class="row gx-1">
+		<div class="my-2 text-secondary">
+			@Item.Description<span class="oi oi-pencil text-primary mx-2" style="cursor: pointer;" />
+		</div>
+	</div>
+	<div class="row gx-1">
+		<div class="mt-2 mb-4 col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<EditorActions Item=@Item />
+		</div>
+	</div>
+	<div class="row full-height">
+		<div class="col-6">
+			<Monaco />
+		</div>
+		<div class="col-6" style="background-color: pink;">
+			<div class="row">
+				<div class="col-12" style="background-color: orange;">
+					Command area
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12" style="background-color: red;">
+					Output area
+				</div>
+			</div>
+		</div>
+	</div>
+}

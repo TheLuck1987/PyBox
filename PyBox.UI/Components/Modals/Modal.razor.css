@@ -1,0 +1,18 @@
+﻿.modal-dialog, .modal-content {
+    background-color: #1f1f1f;
+}
+.modal-header, .modal-footer {
+    color: #ffc107;
+}
+.modal-header {
+    border-bottom: 1px solid #0d6efd;
+}
+.modal-footer {
+    border-top: 1px solid #ffc107;
+}
+.btn-close {
+    color: #dc3545!important;
+}
+.form-control:valid {
+    background-color: #96d3ec !important;
+}

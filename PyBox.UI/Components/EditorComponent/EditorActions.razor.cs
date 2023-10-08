@@ -3,26 +3,24 @@ using PyBox.Shared.Models.Script;
 using PyBox.Shared.Services.Interfaces;
 using PyBox.UI.Components.Modals;
 
-namespace PyBox.UI.Components.ScriptsTable
+namespace PyBox.UI.Components.EditorComponent
 {
-    public partial class ScriptsActions
+    public partial class EditorActions
     {
         #region Inputs
         [Parameter]
-        public ScriptView? Item { get; set; }
+        public ScriptEdit? Item { get; set; }
         [Parameter]
         public bool ShowSmallButtons { get; set; }
         #endregion
 
         #region Ouputs
         [Parameter]
-        public EventCallback<ScriptView> OnStatusChange { get; set; }
+        public EventCallback<ScriptEdit> OnStatusChange { get; set; }
         [Parameter]
-        public EventCallback<int> OnEdit { get; set; }
+        public EventCallback<ScriptEdit> OnItemDeleting { get; set; }
         [Parameter]
-        public EventCallback<ScriptView> OnItemDeleting { get; set; }
-        [Parameter]
-        public EventCallback<ScriptView> OnDeleted { get; set; }
+        public EventCallback<ScriptEdit> OnDeleted { get; set; }
         #endregion
 
         private bool sowDeleteConfirm = false;

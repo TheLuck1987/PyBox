@@ -15,16 +15,13 @@
             </button>
         </div>
         <div class="col-3">
-    @if (ShowEditButton)
-    {
             <button type="button"
                     class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "primary") btn-sm"
-                    @onclick="@(() => OnEdit.InvokeAsync())"
+                    @onclick="@(() => OnEdit.InvokeAsync(Item.ScriptId))"
                     title="Edit this script"
                     disabled=@disabled>
                 <span class="oi oi-pencil" />
             </button>
-    }
         </div>
         <div class="col-3">
             <button type="button"

@@ -41,6 +41,8 @@ namespace PyBox.UI.Components.ScriptsTable
             if (result.CancelClicked)
             {
                 newItem = null;
+                modalErrorClass = null;
+                modalErrorMessage = null;
                 return;
             }
             if (result.Result == null)
@@ -88,6 +90,10 @@ namespace PyBox.UI.Components.ScriptsTable
             if (data == null)
                 return;
             item.Enabled = !item.Enabled;
+        }
+        public async Task OnItemEdit(int id)
+        {
+            UriHelper.NavigateTo($"/edit/{id}");
         }
         private void OnItemDeleting(ScriptView item)
         {

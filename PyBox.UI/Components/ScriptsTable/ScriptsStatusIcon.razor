@@ -1,6 +1,3 @@
-﻿@if (Item != null)
-{
-    <span class="oi oi-lock-@(Deleting ? "unlocked text-secondary" : Item.Enabled ? "unlocked text-success" : "locked text-danger")"
-        style="cursor: help;"
-          title="@(Deleting ? "Script being deleted" : Item.Enabled ? "Execution ENABLED" : "Execution DISABLED")" />
-}
+﻿<span class="oi oi-lock-@(Deleting ? "unlocked text-secondary" : Enabled ? "unlocked text-success" : "locked text-danger")"
+    style="cursor: help;"
+        title="@(Deleting ? "Script being deleted" : Enabled ? "Execution ENABLED" : "Execution DISABLED")" />

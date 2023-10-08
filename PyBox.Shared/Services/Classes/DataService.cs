@@ -65,6 +65,18 @@ namespace PyBox.Shared.Services.Classes
         }
         public async Task<IScriptDataServiceResponse> GetScripts()
         {
+            //return new ScriptDataServiceResponse()
+            //{
+            //    ErrorLevel = Enums.WarningLevel.ERROR,
+            //    Errors = "Test error message",
+            //    Result = null
+            //};
+            //return new ScriptDataServiceResponse()
+            //{
+            //    ErrorLevel = Enums.WarningLevel.WARNING,
+            //    Errors = "Test warning message",
+            //    Result = null
+            //};
             return new ScriptDataServiceResponse()
             {
                 ErrorLevel = Enums.WarningLevel.NO_WARNING,
@@ -109,7 +121,8 @@ namespace PyBox.Shared.Services.Classes
 
         public async Task<IScriptDataServiceResponse> GetScript(int id)
         {
-            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
+            //return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.WARNING, Errors = "This method is not yet implemented", Result = null };
+            return new ScriptDataServiceResponse() { ErrorLevel = Enums.WarningLevel.NO_WARNING, Errors = null, Result = _database.Where(d => d.ScriptId == id).First().GetEdit() };
         }
 
         public async Task<IScriptDataServiceResponse> UpdateScript(int id, ScriptEdit scriptEdit)

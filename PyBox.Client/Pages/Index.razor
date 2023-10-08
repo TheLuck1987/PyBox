@@ -1,119 +1,21 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-@if (simpleMessageShow)
+<PageTitle>PyBox Home</PageTitle>
+@if (errorResponse != null)
 {
-    <ModalMessage Title=@simpleMessageTitle Message=@simpleMessageText OnExit=@hideModal />
+    <ErrorViewers ErrorResponse="errorResponse" />
 }
-
-@if (confirmMessageShow)
+else
 {
-    <ModalConfirm Title=@confirmMessageTitle Message=@confirmMessageText ButtonColor=@confirmColor OnExit=@showConfirmResult />
+    <ScriptsTable OnError=@OnTableError />
 }
-
-
-@if (formMessageShow)
-{
-    <ModalForm Title=@formMessageTitle ConfirmLable=@formConfirmLabel ConfirmColor=@formConfirmColor
-                FormObject=@formObject FormAlertClass=@formAlertClass FormAlertMessage=@formAlertMessage OnExit=@showFormResult>
-        <FormContent>
-            <div class="form-group">
-                <label>Title</label>
-                <InputText @bind-Value="formObject!.Title" class="form-control" />
-                <ValidationMessage For="@(() => formObject.Title)" />
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <InputTextArea @bind-Value="formObject.Description" class="form-control" />
-                <ValidationMessage For="@(() => formObject.Description)" />
-            </div>
-        </FormContent>
-    </ModalForm>
-}
-
-<button @onclick=@showSimpleMessage>Show SimpleMessage</button>
-<button @onclick=@showConfirmMessage>Show ConfirmMessage</button>
-<button @onclick=@showFormMessage>Show FormMessage</button>
 
 @code {
-    private bool simpleMessageShow = false;
-    private string simpleMessageTitle = "Hello prompt";
-    private string simpleMessageText = "Hello to you";
+    private bool showError = false;
+    private ScriptDataServiceResponse? errorResponse = null;
 
-    private bool confirmMessageShow = false;
-    private string confirmMessageTitle = "Are you sure?";
-    private string confirmMessageText = "Are you sure you want to perform this action?";
-    private string confirmColor = "danger";
-
-    private bool formMessageShow = false;
-    private string formMessageTitle = "New Item";
-    private string formConfirmLabel = "Create";
-    private string formConfirmColor = "success";
-    private ScriptDefinition? formObject = null;
-    private string? formAlertClass = "danger";
-    private string? formAlertMessage = null;
-
-
-    private void showSimpleMessage() {
-        simpleMessageTitle = "Hello prompt";
-        simpleMessageText = simpleMessageText == "Hello from me" ? simpleMessageText = "Hello to you" : "Hello from me";
-        simpleMessageShow = true;
-    }
-    private void showConfirmMessage()  {
-        confirmMessageShow = true;
-    }
-
-    private void showFormMessage()
+    private void OnTableError(ScriptDataServiceResponse response)
     {
-        formObject = new();
-        if (formAlertClass == null)
-        {
-            formObject = formObject == null ? formObject = new() : formObject;
-            formAlertClass = "warning";
-            formAlertMessage = "This is a WARNING alert";
-        }
-        else if (formAlertClass == "warning")
-        {
-            formObject = formObject == null ? formObject = new() : formObject;
-            formAlertClass = "danger";
-            formAlertMessage = "This is a DANGER alert";
-        }
-        else
-        {
-            formAlertClass = null;
-            formAlertMessage = null;
-        }
-        formMessageShow = true;
-    }
-
-    private async Task showConfirmResult(ModalResult result)
-    {
-        await hideModal(result);
-        simpleMessageTitle = "Confirm result";
-        simpleMessageText = result.CancelClicked ? "Cancel clicked" : "Confirm clicked";
-        simpleMessageShow = true;
-    }
-
-    private async Task showFormResult(ModalResult result)
-    {
-        await hideModal(result);
-        formObject = result.Result != null ? (ScriptDefinition?)result.Result : null;
-        simpleMessageTitle = "Form result";
-        if (result.CancelClicked || formObject == null)
-            simpleMessageText = "Cancel clicked";
-        else
-            simpleMessageText = $"Create clicked\n\nTitle: {formObject.Title}\nDescription: {(formObject.Description == null ? "" : formObject.Description)}";
-        simpleMessageShow = true;
-    }
-
-    private async Task hideModal(ModalResult result) {
-        simpleMessageShow = false;
-        confirmMessageShow = false;
-        formMessageShow = false;
+        errorResponse = response;
     }
 }

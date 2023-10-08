@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazorMonaco" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PyBox.Shared\PyBox.Shared.csproj" />
     <ProjectReference Include="..\PyBox.UI\PyBox.UI.csproj" />
   </ItemGroup>

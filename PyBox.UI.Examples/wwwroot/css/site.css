@@ -4,7 +4,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     height: 100vh;
     max-height: 100vh;
+    background-color: #181818;
+    color: white;
 }
+
 h1:focus {
     outline: none;
 }

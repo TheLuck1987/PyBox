@@ -1,24 +1,25 @@
 ﻿.lits-titles {
     font-size: 16px;
     font-weight: 700;
-    border-bottom: 1px solid black !important;
+    border-bottom: 1px solid #ffc107 !important;
 }
 
 .list-row {
+    background-color: #1f1f1f;
     border-bottom: 1px solid #c2c4c5;
 }
 
 .list-row:hover {
-    background-color: #edfcee;
+    background-color: #1f271f;
 }
 
 .list-row.disabled {
     border-bottom: 1px solid #c2c4c5;
-    background-color: #f3f3f3;
+    background-color: #2d2d2d;
 }
 
 .list-row.disabled:hover {
-    background-color: #f9dcdc;
+    background-color: #271f1f;
 }
 
 .list-row.deleting {
@@ -26,9 +27,15 @@
     color: gray;
 }
 
-
 .list-row.deleting:hover {
     background-color: lightgray;
+}
+
+.lines-container {
+    max-height: calc(100vh - 16.25rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*border-bottom: 1px solid #ffc107 !important;*/
 }
 
 @media (max-width: 1200px) {
@@ -48,5 +55,9 @@
 
     .item-date {
         font-size: 15px;
+    }
+
+    .lines-container {
+        max-height: calc(100vh - 12.25rem);
     }
 }
