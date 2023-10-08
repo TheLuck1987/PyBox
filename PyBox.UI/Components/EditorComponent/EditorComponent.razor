@@ -1,37 +1,100 @@
 ﻿@inject IJSRuntime JSRuntime
 @inject IScriptDataService DataService
+@inject NavigationManager UriHelper
 @if (Item != null)
 {
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<div class="row gx-1">
-		<div class="text-warning">
-			@Item.Title<span class="oi oi-pencil text-primary mx-2" style="cursor: pointer;"/>
+		<div class="col-lg-1 col-sm-2 mb-3">
+			<button type="button" class="btn btn-sm mx-2 btn-primary text-light" title="Back to the list"><span class="oi oi-arrow-thick-left" @onclick="goBack" /></button>
+		</div>
+		<div class="col-lg-11 col-sm-10 mb-3">
+			<div class="row gx-1">
+				<div>
+					<PyBox.UI.Components.ScriptsTable.ScriptsStatusIcon Enabled=@Item.Enabled />
+					<span class="text-warning">@Item.Title</span>
+					<span class="oi oi-pencil text-primary clickable mx-2" title="Rename" onclick=@editTitle />
+				</div>
+				<div class="my-2">
+					<span class="text-secondary">@Item.Description</span>
+					<span class="oi oi-pencil text-primary clickable mx-2" title="Change description" onclick=@editDescription />
+				</div>
+			</div>
 		</div>
 	</div>
+	
 	<div class="row gx-1">
-		<div class="my-2 text-secondary">
-			@Item.Description<span class="oi oi-pencil text-primary mx-2" style="cursor: pointer;" />
+		<div class="mt-2 col-lg-1 col-2 mb-3">
+			<button type="button" class="btn mx-2 @(scriptText != Item.ScriptText ? "btn-outline-warning" : "btn-outline-info") p-0 btn-save" style="width: 26.5px; height: 29px;" title="Save the script" @onclick="saveScript">
+				<i class="fa fa-save" style="font-size: 21px; margin: 3px auto;"></i>
+			</button>
 		</div>
-	</div>
-	<div class="row gx-1">
-		<div class="mt-2 mb-4 col-xl-2 col-lg-4 col-md-6 col-sm-12">
-			<EditorActions Item=@Item />
+		<div class="mt-2 col-lg-10 col-8 mb-3">
+			<InputText @bind-Value="parameters" class="form-control bg-dark text-light" />
+		</div>
+		<div class="mt-2 col-lg-1 col-2 mb-3 text-left">
+			<button type="button"
+					class="btn mx-auto d-block btn-outline-success btn-sm"
+					@onclick="@(() => null)"
+					title="Run this script"
+					data-toggle="tooltip"
+					data-placement="bottom">
+				<span class="oi oi-media-play" />
+			</button>
 		</div>
 	</div>
 	<div class="row full-height">
-		<div class="col-6">
-			<Monaco />
-		</div>
-		<div class="col-6" style="background-color: pink;">
-			<div class="row">
-				<div class="col-12" style="background-color: orange;">
-					Command area
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12" style="background-color: red;">
-					Output area
-				</div>
-			</div>
+		<div class="col-12">
+			<Monaco InText=@Item.ScriptText ScriptChanged=@scriptChanged />
 		</div>
 	</div>
+	<div class="row gx-1 mt-1 p-2">
+		<div class="col-12">
+			<span class="text-warning">Result area</span>
+		</div>
+	</div>
+	<div class="row gx-1 p-2 result-area">
+		<div class="col-12">
+
+		</div>
+	</div>
+	@if (showEditTitle)
+	{
+		<ModalForm Title=@showEditTitleTitle ConfirmLable="Rename" FormObject=@editItem FormAlertClass=@titleErrorClass FormAlertMessage=@titleErrorMessage OnExit=@OnEditTitleEnd>
+			<FormContent>
+				<div class="form-group">
+					<label>Title</label>
+					<InputText @bind-Value="editItem!.Title" class="form-control bg-dark text-light" />
+					<ValidationMessage For="@(() => editItem.Title)" />
+				</div>
+			</FormContent>
+			<FormValidator>
+				<NewScriptValidatorProvider />
+			</FormValidator>
+		</ModalForm>
+	}
+	@if (showEditDescription)
+	{
+		<ModalForm Title=@showEditDescriptionTitle ConfirmLable="Save" FormObject=@editItem FormAlertClass=@descriptionErrorClass FormAlertMessage=@descriptionErrorMessage OnExit=@OnEditDescriptionEnd>
+			<FormContent>
+				<div class="form-group">
+					<label>Description</label>
+					<InputText @bind-Value="editItem!.Description" class="form-control bg-dark text-light" />
+					<ValidationMessage For="@(() => editItem.Description)" />
+				</div>
+			</FormContent>
+			<FormValidator>
+				<NewScriptValidatorProvider />
+			</FormValidator>
+		</ModalForm>
+	}
+	@if (showConfirm)
+	{
+		<ModalConfirm 
+			ButtonColor="warning" 
+			ConfirmLable="Discard changes" 
+			Title="Exit without saving?" 
+			Message="Are you sure you want to return to the script list without saving any changes you made to the script?"
+			OnExit="goBackConfirmed" />
+	}
 }

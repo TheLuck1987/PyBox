@@ -1,3 +1,16 @@
-﻿body
-{
+﻿.clickable {
+    cursor: pointer;
+}
+.full-height {
+    height: calc(100vh - 25rem);
+}
+.result-area {
+    height: 8rem;
+    max-height: 8rem;
+    overflow: auto;
+    background-color: #1f1f1f;
+    border-top: 1px solid #ffc107 !important;
+}
+.btn-save:hover {
+    color: white;
 }

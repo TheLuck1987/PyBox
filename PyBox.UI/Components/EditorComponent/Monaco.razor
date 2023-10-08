@@ -1,5 +1,7 @@
 ﻿@inject IJSRuntime JSRuntime
 
 <StandaloneCodeEditor 
-	ConstructionOptions="EditorConstructionOptions"
-	OnDidInit="EditorOnDidInit" />
+	ConstructionOptions="editorConstructionOptions"
+	OnDidInit="editorOnDidInit"
+	OnKeyUp="changed"
+	OnMouseUp="changed"/>
