@@ -73,6 +73,10 @@ namespace PyBox.PyRunner
 				using (StreamReader reader = process.StandardOutput)
 					result = reader.ReadToEnd();
 				string errors = process.StandardError.ReadToEnd();
+				if (!string.IsNullOrEmpty(result))
+					result = result.Replace(executionPath, "").Replace(scriptName, "<scriptName>");
+				if (!string.IsNullOrEmpty(errors))
+					errors = errors.Replace(executionPath, "").Replace(scriptName, "<scriptName>");
 				return new string[] { result, errors };
 			}
 			catch (Exception ex)

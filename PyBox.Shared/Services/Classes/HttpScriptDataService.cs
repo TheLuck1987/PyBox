@@ -15,6 +15,14 @@ namespace PyBox.Shared.Services.Classes
             _httpHelper = httpHelper;
         }
 
+        public async Task<IScriptDataServiceResponse> RunScript(int id, string parameters = "")
+        {
+            var data = await _httpHelper.GetData(HttpHelperRequestMethod.POST, $"scripts/run/{id}", parameters);
+            if (data.ErrorLevel == WarningLevel.NO_WARNING && data.Result != null)
+                data.Result = JsonConvert.DeserializeObject<InteropsResult>((string)data.Result);
+            return data;
+        }
+
         public async Task<IScriptDataServiceResponse> InstallDependencies()
         {
             var data = await _httpHelper.GetData(HttpHelperRequestMethod.GET, "configurations/install");

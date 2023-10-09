@@ -3,6 +3,7 @@ using PyBox.Shared.Enums;
 using PyBox.Shared.Models.Script;
 using PyBox.Shared.Services.Classes;
 using PyBox.Shared.Services.Interfaces;
+using PyBox.Shared.Services.Interops;
 using PyBox.UI.Components.Modals;
 
 namespace PyBox.UI.Components.EditorComponent
@@ -43,6 +44,9 @@ namespace PyBox.UI.Components.EditorComponent
 		private bool showDisabledMessage = false;
 		private readonly string disabledMessage = "Execution of this script is disabled\n\nEnable the script from the main list to be able to run it";
 
+		private string executionResult = "";
+		private string executionClass = "";
+
 		protected override void OnInitialized()
 		{
 			scriptText = Item?.ScriptText;
@@ -66,30 +70,69 @@ namespace PyBox.UI.Components.EditorComponent
 		private void showInfo() => showInfoMessage = !showInfoMessage;
 		private void showDisabled() => showDisabledMessage = !showDisabledMessage;
 
-		private async void saveScript()
+		private async void saveScript(bool runIt)
 		{
+			executionClass = "info";
+			executionResult = "Saving...";
+			StateHasChanged();
 			Item!.ScriptText = scriptText;
 			var data = await DataService.UpdateScript(Item!.ScriptId, Item);
 			data = await checkData(data);
 			if (data == null)
 			{
 				editItem = null;
+				executionResult = "";
+				StateHasChanged();
 				return;
 			}
 			else if (data.ErrorLevel != WarningLevel.NO_WARNING)
 			{
 				await OnError.InvokeAsync((ScriptDataServiceResponse)data);
 			}
+			executionResult = "";
+			StateHasChanged();
+			if (runIt)
+				await runScript();
 		}
 
 		private async Task runScript()
 		{
+			executionClass = "info";
+			executionResult = "Running...";
+			StateHasChanged();
 			if (!Item!.Enabled)
 			{
 				showDisabled();
 				return;
 			}
-
+			var data = await DataService.RunScript(Item.ScriptId, parameters == null ? "" : parameters);
+			data = await checkData(data, true);
+			if (data == null)
+				return;
+			if (data.Errors != null && data.Errors == "Script is disabled")
+			{
+				showDisabled();
+				return;
+			}
+			if (data.Errors != null && data.Errors == "Script is empty")
+			{
+				executionResult = data.Errors;
+				StateHasChanged();
+				return;
+			}
+			var result = (InteropsResult)data.Result!;
+			if (!string.IsNullOrWhiteSpace(result.Error))
+			{
+				executionClass = "danger";
+				executionResult = result.Error;
+				StateHasChanged();
+			}
+			else if (result.Result != null)
+			{
+				executionClass = "light";
+				executionResult = result.Result;
+				StateHasChanged();
+			}
 		}
 
 		private void goBack()
@@ -110,6 +153,7 @@ namespace PyBox.UI.Components.EditorComponent
 		}
 
 		private void scriptChanged(string? text) => scriptText = text;
+		private void scriptIsEquals() => scriptText = Item!.ScriptText;
 
 		private async Task onEditTitleEnd(ModalResult result)
 		{

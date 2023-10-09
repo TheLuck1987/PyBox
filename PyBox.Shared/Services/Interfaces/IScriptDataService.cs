@@ -13,5 +13,6 @@ namespace PyBox.Shared.Services.Interfaces
         public Task<IScriptDataServiceResponse> DeleteScript(int id);
         public Task<IScriptDataServiceResponse> CheckDependencies();
         public Task<IScriptDataServiceResponse> InstallDependencies();
+        public Task<IScriptDataServiceResponse> RunScript(int id, string parameters = "");
     }
 }
