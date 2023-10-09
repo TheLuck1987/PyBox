@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 .full-height {
-    height: calc(100vh - 25rem);
+    height: calc(100vh - 25.5rem);
 }
 .result-area {
     height: 8rem;

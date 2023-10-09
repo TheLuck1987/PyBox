@@ -2,7 +2,7 @@
 @inject NavigationManager UriHelper
 @if (items != null)
 {
-    <h3>Scripts <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=OnCreateRequest><span class="oi oi-plus" /> Create new cript</button></h3>
+    <h3>Scripts <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=onCreateRequest><span class="oi oi-plus" /> Create new Script</button></h3>
     <br />
     @if (items.Count == 0)
     {
@@ -64,10 +64,11 @@
                             <div class="col-xl-5 col-lg-3 col-md-12">
                                 <ScriptsActions 
                                     Item=@item 
-                                    OnItemDeleting=@OnItemDeleting 
-                                    OnDeleted=@OnItemDeleted 
-                                    OnStatusChange=@OnItemStatusChange
-                                    OnEdit=@OnItemEdit />
+                                    OnItemDeleting=@onItemDeleting 
+                                    OnDeleted=@onItemDeleted 
+                                    OnStatusChange=@onItemStatusChange
+                                    OnEdit=@onItemEdit 
+                                    OnError="@OnError"/>
                             </div>
                         </div>
                     </div>
@@ -77,7 +78,13 @@
     }
     @if (showNewScriptModal)
     {
-        <ModalForm Title="Create new Script" ConfirmLable="Create" FormObject=@newItem FormAlertClass=@modalErrorClass FormAlertMessage=@modalErrorMessage OnExit=@OnCreateEnd>
+        <ModalForm TitleIcon="oi oi-plus" 
+            Title="Create new Script" 
+            ConfirmLable="Create" 
+            FormObject=@newItem 
+            FormAlertClass=@modalErrorClass 
+            FormAlertMessage=@modalErrorMessage 
+            OnExit=@onCreateEnd>
             <FormContent>
                 <div class="form-group">
                     <label>Title</label>
@@ -95,4 +102,8 @@
             </FormValidator>
         </ModalForm>
     }
+}
+else
+{
+    <h3>Loading...</h3>
 }

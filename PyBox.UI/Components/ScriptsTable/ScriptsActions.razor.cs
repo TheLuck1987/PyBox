@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PyBox.Shared.Enums;
 using PyBox.Shared.Models.Script;
+using PyBox.Shared.Services.Classes;
 using PyBox.Shared.Services.Interfaces;
 using PyBox.UI.Components.Modals;
 
@@ -23,6 +25,8 @@ namespace PyBox.UI.Components.ScriptsTable
         public EventCallback<ScriptView> OnItemDeleting { get; set; }
         [Parameter]
         public EventCallback<ScriptView> OnDeleted { get; set; }
+        [Parameter]
+        public EventCallback<ScriptDataServiceResponse> OnError { get; set; }
         #endregion
 
         private bool sowDeleteConfirm = false;
@@ -30,6 +34,7 @@ namespace PyBox.UI.Components.ScriptsTable
 
         private bool disabled = false;
         private bool onDeleting = false;
+        private ScriptDataServiceResponse? errorResponse;
 
         private async Task confirmRequestClosed(ModalResult result)
         {
@@ -43,10 +48,29 @@ namespace PyBox.UI.Components.ScriptsTable
                 IScriptDataService _dataService = DataService;
                 await Task.Run(async () =>
                 {
-                    await _dataService.DeleteScript(id);
-                    await InvokeAsync(new Action(itemDeleted));
+                    var data = await _dataService.DeleteScript(id);
+                    if (data == null || data.Result == null || data.ErrorLevel != WarningLevel.NO_WARNING)
+                    {
+                        string message = data == null || data.Errors == null ? "Unhandled exception" : data.Errors;
+                        WarningLevel level = data == null || data.ErrorLevel == WarningLevel.NO_WARNING ? WarningLevel.ERROR : data.ErrorLevel;
+                        var result = new ScriptDataServiceResponse() { Result = null, ErrorLevel = level, Errors = message };
+                        await InvokeAsync(() => errorResponse = result);
+                        await InvokeAsync(onError);
+                    }
+                    else if (!(bool)data.Result!)
+                    {
+                        var result = new ScriptDataServiceResponse() { Result = null, ErrorLevel = WarningLevel.ERROR, Errors = "Unhandled exception" };
+                        await InvokeAsync(() => errorResponse = result);
+                        await InvokeAsync(onError);
+                    }
+                    else
+                        await InvokeAsync(new Action(itemDeleted));
                 }).ConfigureAwait(false);
             }
+        }
+        private async Task onError()
+        {
+            await OnError.InvokeAsync(errorResponse);
         }
         private void itemDeleted()
         {

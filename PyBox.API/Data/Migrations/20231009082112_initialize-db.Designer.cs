@@ -11,8 +11,8 @@ using PyBox.API.Data;
 namespace PyBox.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231008164301_dbcreation")]
-    partial class dbcreation
+    [Migration("20231009082112_initialize-db")]
+    partial class initializedb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -2,7 +2,7 @@
 @if (Item != null)
 {
     <div class="row gx-1 justify-content-center">
-        <div class="col-3">
+        @* <div class="col-3">
             <button type="button"
                     class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "success") btn-sm"
                     @onclick="@(() => null)"
@@ -13,7 +13,7 @@
                 >
                 <span class="oi oi-media-play" />
             </button>
-        </div>
+        </div> *@
         <div class="col-3">
             <button type="button"
                     class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "primary") btn-sm"
@@ -52,6 +52,6 @@
 
     @if (sowDeleteConfirm)
     {
-        <ModalConfirm Title="Are you sure?" Message=@confirmMessage ConfirmLable="Confirm" ButtonColor="danger" OnExit=@confirmRequestClosed />
+        <ModalConfirm TitleIcon="oi oi-trash" Title="Are you sure?" Message=@confirmMessage ConfirmLable="Confirm" ButtonColor="danger" OnExit=@confirmRequestClosed />
     }
 }

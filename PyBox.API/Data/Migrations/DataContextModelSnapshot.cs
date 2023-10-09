@@ -7,7 +7,7 @@ using PyBox.API.Data;
 
 #nullable disable
 
-namespace PyBox.API.Data.Database
+namespace PyBox.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot

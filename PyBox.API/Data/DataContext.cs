@@ -7,5 +7,6 @@ namespace PyBox.API.Data
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 		public DbSet<ScriptEntity> Scripts { get; set; }
+
 	}
 }

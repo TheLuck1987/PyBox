@@ -9,25 +9,28 @@
 }
 else if (item != null)
 {
-	<EditorComponent Item=@item />
+    <EditorComponent Item=@item OnError="OnEditError" />
 }
 
 @code {
     [Parameter]
     public string? StringId { get; set; }
 
-    private int id = -1;
     private ScriptEdit? item = null;
 
-    private bool showError = false;
     private ScriptDataServiceResponse? errorResponse = null;
+
+    private void OnEditError(ScriptDataServiceResponse response)
+    {
+        errorResponse = response;
+    }
 
     protected override async Task OnInitializedAsync()
     {
         if (StringId != null)
         {
             var data = await DataService.GetScript(int.Parse(StringId));
-            data = await CheckData(data);
+            data = CheckData(data);
             if (data == null)
                 return;
             item = (ScriptEdit?)data.Result;
@@ -35,8 +38,7 @@ else if (item != null)
         await base.OnInitializedAsync();
     }
 
-
-    private async Task<ScriptDataServiceResponse?> CheckData(IScriptDataServiceResponse? data)
+    private ScriptDataServiceResponse? CheckData(IScriptDataServiceResponse? data)
     {
         if (data == null || data.Result == null || data.ErrorLevel != WarningLevel.NO_WARNING)
         {
