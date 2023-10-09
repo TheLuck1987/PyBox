@@ -2,6 +2,7 @@
 using PyBox.Shared.Enums;
 using PyBox.Shared.Models.Script;
 using PyBox.Shared.Services.Interfaces;
+using PyBox.Shared.Services.Interops;
 using PyBox.Shared.Services.Utilities;
 
 namespace PyBox.Shared.Services.Classes
@@ -13,6 +14,23 @@ namespace PyBox.Shared.Services.Classes
         {
             _httpHelper = httpHelper;
         }
+
+        public async Task<IScriptDataServiceResponse> InstallDependencies()
+        {
+            var data = await _httpHelper.GetData(HttpHelperRequestMethod.GET, "configurations/install");
+            if (data.ErrorLevel == WarningLevel.NO_WARNING && data.Result != null)
+                data.Result = JsonConvert.DeserializeObject<InteropsResult>((string)data.Result);
+            return data;
+        }
+
+        public async Task<IScriptDataServiceResponse> CheckDependencies()
+        {
+            var data = await _httpHelper.GetData(HttpHelperRequestMethod.GET, "configurations");
+            if (data.ErrorLevel == WarningLevel.NO_WARNING && data.Result != null)
+                data.Result = JsonConvert.DeserializeObject<InteropsResult>((string)data.Result);
+            return data;
+        }
+
         public async Task<IScriptDataServiceResponse> CheckTitle(ScriptCheckTitleUnique input)
         {
             var data = await _httpHelper.GetData(HttpHelperRequestMethod.POST, "scripts/check_titles", input);

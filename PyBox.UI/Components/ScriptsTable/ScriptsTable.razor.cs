@@ -99,14 +99,8 @@ namespace PyBox.UI.Components.ScriptsTable
                 return;
             item.Enabled = !item.Enabled;
         }
-        private void onItemEdit(int id)
-        {
-            UriHelper.NavigateTo($"/edit/{id}");
-        }
-        private void onItemDeleting(ScriptView item)
-        {
-            itemOnDeleting = item;
-        }
+        private void onItemEdit(int id) => UriHelper.NavigateTo($"/edit/{id}");
+        private void onItemDeleting(ScriptView item) => itemOnDeleting = item;
         private void onItemDeleted(ScriptView item)
         {
             itemOnDeleting = null;

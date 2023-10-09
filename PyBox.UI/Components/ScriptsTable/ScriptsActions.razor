@@ -2,25 +2,13 @@
 @if (Item != null)
 {
     <div class="row gx-1 justify-content-center">
-        @* <div class="col-3">
-            <button type="button"
-                    class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "success") btn-sm"
-                    @onclick="@(() => null)"
-                    disabled="@(!Item.Enabled || disabled)"
-                    title="Run this script"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                >
-                <span class="oi oi-media-play" />
-            </button>
-        </div> *@
         <div class="col-3">
             <button type="button"
                     class="btn mx-auto d-block btn-outline-@(disabled ? "secondary" : "primary") btn-sm"
                     @onclick="@(() => OnEdit.InvokeAsync(Item.ScriptId))"
-                    title="Edit this script"
+                    title="View, Run or Edit this script"
                     disabled=@disabled>
-                <span class="oi oi-pencil" />
+                <span class="oi oi-eye" />
             </button>
         </div>
         <div class="col-3">
@@ -35,7 +23,7 @@
         <div class="col-3">
             <button type="button"
                     class="btn mx-auto d-block btn-outline-danger btn-sm"
-                    @onclick="@(() => OnDeleteRequest())"
+                    @onclick="onDeleteRequest"
                     title="Delete this script"
                     disabled=@disabled>
                 @if (onDeleting)

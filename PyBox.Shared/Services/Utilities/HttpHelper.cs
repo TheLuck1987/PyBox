@@ -32,14 +32,14 @@ namespace PyBox.Shared.Services.Utilities
                         data = await _http.GetAsync(url);
                         break;
                 }
-                return await GetResponse(data);
+                return await getResponse(data);
             }
             catch (Exception ex)
             {
                 return new(null, ex.Message, WarningLevel.ERROR);
             }
         }
-        public async Task<ScriptDataServiceResponse> GetResponse(HttpResponseMessage data)
+        private async Task<ScriptDataServiceResponse> getResponse(HttpResponseMessage data)
         {
             HttpStatusCode[] badCodes = new HttpStatusCode[]
             {
@@ -73,13 +73,5 @@ namespace PyBox.Shared.Services.Utilities
                 return new(null, ex.ToString(), WarningLevel.ERROR);
             }
         }
-    }
-
-    public enum HttpHelperRequestMethod
-    {
-        GET,
-        POST,
-        PUT,
-        DELETE
     }
 }

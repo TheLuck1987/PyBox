@@ -1,20 +1,86 @@
-﻿@page "/"
+﻿@inject IScriptDataService DataService
+@page "/"
 
 <PageTitle>PyBox Home</PageTitle>
-@if (errorResponse != null)
+@if (dependenciesChecked != null && !(bool)dependenciesChecked)
+{
+    <div class="alert alert-@dependenciesClass" role="alert">
+        @dependenciesMessage
+    </div>
+}
+else if (errorResponse != null && dependenciesChecked != null)
 {
     <ErrorViewers ErrorResponse="errorResponse" />
 }
-else
+else if (dependenciesChecked != null)
 {
     <ScriptsTable OnError=@OnTableError />
 }
-
 @code {
+    private bool? dependenciesChecked = null;
+    private string dependenciesMessage = "Please wait. The system is currently checking whether all dependencies are installed and configured correctly...";
+    private string dependenciesClass = "info";
     private ScriptDataServiceResponse? errorResponse = null;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await checkDependencies();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task checkDependencies()
+    {
+        var data = await DataService.CheckDependencies();
+        data = checkData(data);
+        dependenciesChecked = false;
+        if (data.ErrorLevel == WarningLevel.ERROR)
+        {
+            dependenciesChecked = true;
+            OnTableError((ScriptDataServiceResponse)data);
+            StateHasChanged();
+            return;
+        }
+        if (data.ErrorLevel == WarningLevel.WARNING)
+        {
+            dependenciesClass = "warning";
+            dependenciesMessage = "Please wait. The system is currently installing all dependencies...";
+            StateHasChanged();
+            data = await DataService.InstallDependencies();
+            data = checkData(data);
+            if (data.ErrorLevel != WarningLevel.NO_WARNING)
+            {
+                dependenciesChecked = true;
+                OnTableError(new() { ErrorLevel = WarningLevel.ERROR, Errors = data.Errors, Result = null });
+                StateHasChanged();
+                return;
+            }
+            dependenciesChecked = true;
+            StateHasChanged();
+        }
+        else
+        {
+            dependenciesChecked = true;
+            StateHasChanged();
+        }
+    }
 
     private void OnTableError(ScriptDataServiceResponse response)
     {
         errorResponse = response;
+    }
+
+    private ScriptDataServiceResponse checkData(IScriptDataServiceResponse? data, bool internalError = false)
+    {
+        if (data == null || data.Result == null || data.ErrorLevel != WarningLevel.NO_WARNING)
+        {
+            string message = data == null || data.Errors == null ? "Unhandled exception" : data.Errors;
+            WarningLevel level = data == null || data.ErrorLevel == WarningLevel.NO_WARNING ? WarningLevel.ERROR : data.ErrorLevel;
+            var result = new ScriptDataServiceResponse() { Result = null, ErrorLevel = level, Errors = message };
+            return result;
+        }
+        return (ScriptDataServiceResponse)data;
     }
 }

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BlazorMonaco" Version="3.1.0" />
   </ItemGroup>
 

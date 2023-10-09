@@ -68,10 +68,7 @@ namespace PyBox.UI.Components.ScriptsTable
                 }).ConfigureAwait(false);
             }
         }
-        private async Task onError()
-        {
-            await OnError.InvokeAsync(errorResponse);
-        }
+        private async Task onError() => await OnError.InvokeAsync(errorResponse);
         private void itemDeleted()
         {
             disabled = false;
@@ -79,9 +76,6 @@ namespace PyBox.UI.Components.ScriptsTable
             StateHasChanged();
             OnDeleted.InvokeAsync(Item);
         }
-        private void OnDeleteRequest()
-        {
-            sowDeleteConfirm = true;
-        }
+        private void onDeleteRequest() => sowDeleteConfirm = true;
     }
 }
