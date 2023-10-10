@@ -14,9 +14,8 @@ namespace PyBox.UI.Components.EditorComponent
 		public EventCallback ScriptIsEquals { get; set; }
 
 		private StandaloneCodeEditor? _editor = null;
-		private string baseText = "#Remember that if you want to pass parameters to the script, you need to import the \"sys\" library (using sys).\n" +
-					"#This way you will be able to access the parameters passed to the script via the \"sys.argv[<index>]\" variable\n\n#PS Remember that the first " +
-					"parameter passed to the script will be at index \"1\" (sys.argv[1]) and not at index \"0\"\n\nimport sys\n\nprint(f'Hello {sys.argv[1]}')\n";
+		private string baseText = "#Remember: the parameters will be accessible from the script by calling the \"args[<index>]\" array.\n\n" +
+						"print(f'Hello {args[0]}')\n";
 		private StandaloneEditorConstructionOptions editorConstructionOptions(StandaloneCodeEditor editor)
 		{
 			_editor = editor;

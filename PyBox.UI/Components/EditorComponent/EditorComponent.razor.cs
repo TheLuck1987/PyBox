@@ -36,16 +36,18 @@ namespace PyBox.UI.Components.EditorComponent
 
 		private bool showConfirm = false;
 		private bool showInfoMessage = false;
-		private readonly string infoMessage = "If you want to pass parameters to the script, you need to import the \"sys\" library (using sys).\n" +
-			"This way you will be able to access the parameters passed to the script via the \"sys.argv[<index>]\" variable\n\n" +
-			"PS Remember that the first parameter passed to the script will be at index \"1\" (sys.argv[1]) and not at index \"0\"\n\n" +
+		private readonly string infoMessage = "*The maximum script execution time cannot exceed 10 seconds. Otherwise you will run into a TimeOut error\n\n" +
+			"*You cannot import potentially harmful modules for the system (os, sys, cmd...) Otherwise you will encounter a Security error\n\n" +
+			"*The parameters will be accessible from the script by calling the \"args[<index>]\" array.\n" +
+			"PS do not use the \"args\" variable for anything else unless you want to override the input parameters\n" +
 			"Example:\n\n" +
-			"import sys\nprint(f'Hello {sys.argv[1]}')";
+			"print(f'Hello {args[0]}')";
 		private bool showDisabledMessage = false;
 		private readonly string disabledMessage = "Execution of this script is disabled\n\nEnable the script from the main list to be able to run it";
 
 		private string executionResult = "";
 		private string executionClass = "";
+		private bool isRunning = false;
 
 		protected override void OnInitialized()
 		{
@@ -55,6 +57,8 @@ namespace PyBox.UI.Components.EditorComponent
 
 		private void editTitle()
 		{
+			if (isRunning)
+				return;
 			editItem = new() { Description = Item!.Description, ScriptId = Item.ScriptId, Enabled = Item.Enabled, ScriptText = Item.ScriptText, Title = Item.Title };
 			showEditTitleTitle = $"Rename {Item!.Title}";
 			showEditTitle = true;
@@ -62,6 +66,8 @@ namespace PyBox.UI.Components.EditorComponent
 
 		private void editDescription()
 		{
+			if (isRunning)
+				return;
 			editItem = new() { Description = Item!.Description, ScriptId = Item.ScriptId, Enabled = Item.Enabled, ScriptText = Item.ScriptText, Title = Item.Title };
 			showEditDescriptionTitle = $"Edit {Item!.Title} description";
 			showEditDescription = true;
@@ -97,12 +103,16 @@ namespace PyBox.UI.Components.EditorComponent
 
 		private async Task runScript()
 		{
+			isRunning = true;
 			executionClass = "info";
 			executionResult = "Running...";
 			StateHasChanged();
 			if (!Item!.Enabled)
 			{
+				isRunning = false;
 				showDisabled();
+				executionResult = "";
+				StateHasChanged();
 				return;
 			}
 			var data = await DataService.RunScript(Item.ScriptId, parameters == null ? "" : parameters);
@@ -111,11 +121,22 @@ namespace PyBox.UI.Components.EditorComponent
 				return;
 			if (data.Errors != null && data.Errors == "Script is disabled")
 			{
+				isRunning = false;
 				showDisabled();
 				return;
 			}
 			if (data.Errors != null && data.Errors == "Script is empty")
 			{
+				isRunning = false;
+				executionClass = "warning";
+				executionResult = data.Errors;
+				StateHasChanged();
+				return;
+			}
+			if (data.Errors != null && data.Errors.StartsWith("Security error"))
+			{
+				isRunning = false;
+				executionClass = "danger";
 				executionResult = data.Errors;
 				StateHasChanged();
 				return;
@@ -123,12 +144,14 @@ namespace PyBox.UI.Components.EditorComponent
 			var result = (InteropsResult)data.Result!;
 			if (!string.IsNullOrWhiteSpace(result.Error))
 			{
+				isRunning = false;
 				executionClass = "danger";
 				executionResult = result.Error;
 				StateHasChanged();
 			}
 			else if (result.Result != null)
 			{
+				isRunning = false;
 				executionClass = "light";
 				executionResult = result.Result;
 				StateHasChanged();

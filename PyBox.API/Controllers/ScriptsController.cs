@@ -90,9 +90,8 @@ namespace PyBox.API.Controllers
 				{
 					Title = input.Title,
 					Description = input.Description,
-					ScriptText = "#Remember that if you want to pass parameters to the script, you need to import the \"sys\" library (using sys).\n" +
-						"#This way you will be able to access the parameters passed to the script via the \"sys.argv[<index>]\" variable\n\n#PS Remember that the first " +
-						"parameter passed to the script will be at index \"1\" (sys.argv[1]) and not at index \"0\"\n\nimport sys\n\nprint(f'Hello {sys.argv[1]}')\n",
+					ScriptText = "#Remember: the parameters will be accessible from the script by calling the \"args[<index>]\" array.\n\n" +
+						"print(f'Hello {args[0]}')\n",
 					CreatedAt = DateTime.Now,
 					Enabled = true,
 					UpdatedAt = null,
@@ -246,13 +245,27 @@ namespace PyBox.API.Controllers
 					return NotFound($"No script found with ID {id}");
 				if (!script.Enabled)
 					return BadRequest("Script is disabled");
-				byte[] data = Encoding.UTF8.GetBytes(script.ScriptText!);
-				if (data.Length == 0)
+				string[] dangerous = new string[] { "import sys", "import os", "import cmd" };
+				if (string.IsNullOrEmpty(script.ScriptText))
 					return BadRequest("Script is empty");
+				foreach (string d in dangerous)
+					if (script.ScriptText.ToLower().Contains(d))
+						return BadRequest("Security error. You cannot import module \"os\" or \"sys\" or \"cmd\"");
+				string text = script.ScriptText;
+				bool haveParameters = false;
+				if (!string.IsNullOrWhiteSpace(parameters))
+				{
+					haveParameters = true;
+					string[] ps = parameters.Split(' ');
+					for (int i = 0; i < ps.Length; i++)
+						ps[i] = $"\"{ps[i]}\"";
+					text = "args = [" + string.Join(", ", ps) + "]\n" + text;
+				}
+				byte[] data = Encoding.UTF8.GetBytes(text);
 				InteropsResult result;
 				try
 				{
-					using Runner runner = new(data, parameters);
+					using Runner runner = new(data, haveParameters);
 					await runner.Run();
 					result = new InteropsResult()
 					{

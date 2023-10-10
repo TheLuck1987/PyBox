@@ -1,5 +1,6 @@
 ﻿.modal-dialog, .modal-content {
     background-color: #1f1f1f;
+    border-color: #0dcaf0;
 }
 .modal-header, .modal-footer {
     color: #ffc107;

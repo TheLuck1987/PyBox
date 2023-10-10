@@ -4,16 +4,18 @@ namespace PyBox.PyRunner
 {
 	public class Runner : IDisposable
 	{
-		private string executionPath, executable, scriptName;
-		private Process process;
+		private string? executionPath, executable, scriptName;
+		private Process? process;
 		public bool IsBusy { get; private set; } = false;
 		public bool IsKilled { get; private set; } = false;
 		public string Result { get; private set; } = string.Empty;
 		public string Errors { get; private set; } = string.Empty;
 		public bool NotInstalled { get; private set; } = false;
+		private bool HaveParameters = false;
 
-		public Runner(byte[] script, string parameters)
+		public Runner(byte[] script, bool haveParameters)
 		{
+			HaveParameters = haveParameters;
 			executionPath = Path.Combine(AppContext.BaseDirectory, "pypy");
 			if (!Directory.Exists(executionPath))
 				return;
@@ -25,7 +27,7 @@ namespace PyBox.PyRunner
 			ProcessStartInfo startInfo = new ProcessStartInfo()
 			{
 				FileName = executable,
-				Arguments = string.Format("\"{0}\" {1}", scriptName, parameters),
+				Arguments = string.Format($"\"{scriptName}\""),
 				WorkingDirectory = executionPath,
 				UseShellExecute = false,
 				CreateNoWindow = true,
@@ -41,7 +43,7 @@ namespace PyBox.PyRunner
 				try
 				{
 					IsBusy = true;
-					process.Start();
+					process!.Start();
 				}
 				catch (Exception ex)
 				{
@@ -49,10 +51,25 @@ namespace PyBox.PyRunner
 					Errors = ex.ToString();
 					return;
 				}
-				await process.WaitForExitAsync();
-				string[] data = !IsKilled ? GetData() : new string[] { "", "" };
-				Result = data[0];
-				Errors = data[1];
+				Stopwatch sw = Stopwatch.StartNew();
+				while (!process.HasExited)
+				{
+					if (sw.ElapsedMilliseconds > 10000)
+					{
+						Kill();
+					}
+				}
+				if (!IsKilled)
+				{
+					string[] data = GetData();
+					Result = data[0];
+					Errors = data[1];
+				}
+				else
+				{
+					Result = "";
+					Errors = "TimeOut error. Your script exceeded the maximum execution time (10 seconds)";
+				}
 				IsBusy = false;
 			}
 			else
@@ -70,13 +87,24 @@ namespace PyBox.PyRunner
 			try
 			{
 				string result = "";
-				using (StreamReader reader = process.StandardOutput)
+				using (StreamReader reader = process!.StandardOutput)
 					result = reader.ReadToEnd();
 				string errors = process.StandardError.ReadToEnd();
 				if (!string.IsNullOrEmpty(result))
-					result = result.Replace(executionPath, "").Replace(scriptName, "<scriptName>");
+					result = result.Replace(executionPath!, "").Replace(scriptName!, "<scriptName>");
 				if (!string.IsNullOrEmpty(errors))
-					errors = errors.Replace(executionPath, "").Replace(scriptName, "<scriptName>");
+				{
+					errors = errors.Replace(executionPath!, "").Replace(scriptName!, "<scriptName>");
+					if (errors.Contains(", line ") && HaveParameters)
+					{
+						try
+						{
+							int line = int.Parse(errors.Split(", line ")[1].Split(',')[0]);
+							errors = errors.Replace($", line {line}", $", line {line - 1}");
+						}
+						catch { }
+					}
+				}
 				return new string[] { result, errors };
 			}
 			catch (Exception ex)
@@ -89,7 +117,7 @@ namespace PyBox.PyRunner
 		{
 			try
 			{
-				process.Kill();
+				process!.Kill();
 			}
 			catch { }
 			IsKilled = true;
@@ -97,8 +125,8 @@ namespace PyBox.PyRunner
 
 		public void Dispose()
 		{
-			File.Delete(Path.Combine(executionPath, scriptName));
-			process.Dispose();
+			File.Delete(Path.Combine(executionPath!, scriptName!));
+			process!.Dispose();
 			process = null;
 		}
 	}

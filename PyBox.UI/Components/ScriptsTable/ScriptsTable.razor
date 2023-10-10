@@ -2,7 +2,14 @@
 @inject NavigationManager UriHelper
 @if (items != null)
 {
-    <h3>Scripts <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=onCreateRequest><span class="oi oi-plus" /> Create new Script</button></h3>
+    <div class="row">
+        <div class="col-11">
+            <h3>Scripts <button type="button" class="btn mx-2 btn-primary" title="Create new Script" @onclick=onCreateRequest><span class="oi oi-plus" /> Create new Script</button></h3>
+        </div>
+        <div class="col-1">
+            <a class="navbar-brand float-end px-6" href="" @onclick=@showInfo><span class="oi oi-info text-info"></span></a>
+        </div>
+    </div>
     <br />
     @if (items.Count == 0)
     {
@@ -101,6 +108,10 @@
                 <NewScriptValidatorProvider />
             </FormValidator>
         </ModalForm>
+    }
+    @if (infoMessageVisible)
+    {
+        <ModalMessage TitleIcon="oi oi-info" Title="General informations" Message=@infoMessage OnExit="showInfo" />
     }
 }
 else

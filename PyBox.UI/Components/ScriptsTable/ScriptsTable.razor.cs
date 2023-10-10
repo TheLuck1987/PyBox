@@ -18,6 +18,13 @@ namespace PyBox.UI.Components.ScriptsTable
         private bool showNewScriptModal = false;
         private string? modalErrorClass = null;
         private string? modalErrorMessage = null;
+        private bool infoMessageVisible = false;
+        private readonly string infoMessage = "*The maximum script execution time cannot exceed 10 seconds. Otherwise you will run into a TimeOut error\n\n" +
+            "*You cannot import potentially harmful modules for the system (os, sys, cmd...) Otherwise you will encounter a Security error\n\n" +
+            "*The parameters will be accessible from the script by calling the \"args[<index>]\" array.\n" +
+            "PS do not use the \"args\" variable for anything else unless you want to override the input parameters\n" +
+            "Example:\n\n" +
+            "print(f'Hello {args[0]}')";
 
         private ScriptView? itemOnDeleting = null;
 
@@ -99,6 +106,7 @@ namespace PyBox.UI.Components.ScriptsTable
                 return;
             item.Enabled = !item.Enabled;
         }
+        private void showInfo() => infoMessageVisible = !infoMessageVisible;
         private void onItemEdit(int id) => UriHelper.NavigateTo($"/edit/{id}");
         private void onItemDeleting(ScriptView item) => itemOnDeleting = item;
         private void onItemDeleted(ScriptView item)
