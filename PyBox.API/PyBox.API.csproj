@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Database\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 

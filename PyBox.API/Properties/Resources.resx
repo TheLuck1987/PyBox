@@ -118,6 +118,89 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Examples" xml:space="preserve">
-    <value>[ { "createdAt": "2023-10-10T08:45:33.3050296", "updatedAt": "2023-10-10T08:45:46.1125614", "scriptId": 8, "scriptText": "print('Hello World')\n", "enabled": true, "title": "Say Hello", "description": "The classic Hello World" }, { "createdAt": "2023-10-10T08:45:33.3050296", "updatedAt": "2023-10-10T08:45:46.1125614", "scriptId": 8, "scriptText": "print('Hello World')\n", "enabled": true, "title": "Say Hello", "description": "The classic Hello World" }, { "createdAt": "2023-10-10T08:47:01.6346239", "updatedAt": "2023-10-10T09:09:15.2850476", "scriptId": 9, "scriptText": "print(f'Hello {args[0]}')\n", "enabled": true, "title": "Say hello with parameters", "description": "A function that greets someone by reading the first incoming parameter" }, { "createdAt": "2023-10-10T08:47:48.6938207", "updatedAt": "2023-10-10T09:09:49.549322", "scriptId": 10, "scriptText": "print(f'{int(args[0]) + int(args[1])}')\n", "enabled": true, "title": "Sum", "description": "Simple addition of two numbers" }, { "createdAt": "2023-10-10T08:49:41.3345518", "updatedAt": "2023-10-10T09:56:09.51229", "scriptId": 11, "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")", "enabled": false, "title": "Disabled script", "description": "A disabled script, just to see how it looks on the list" }, { "createdAt": "2023-10-10T08:52:09.0489", "updatedAt": "2023-10-10T08:52:41.4563636", "scriptId": 12, "scriptText": "import os\n\nprint(os.getcwd())\n", "enabled": true, "title": "Triggers an error", "description": "Triggers security error" }, { "createdAt": "2023-10-10T08:53:19.3676008", "updatedAt": "2023-10-10T09:25:30.3161507", "scriptId": 13, "scriptText": "import time\n\ntime.sleep(11)\n\nprint(\"done\")", "enabled": true, "title": "Triggers an error 2", "description": "Triggers TimeOut error" }, { "createdAt": "2023-10-10T08:55:25.614123", "updatedAt": "2023-10-10T08:57:29.4231649", "scriptId": 14, "scriptText": "# Program to display the Fibonacci sequence up to n-th term\n\nnterms = int(args[0])\n\n# first two terms\nn1, n2 = 0, 1\ncount = 0\n\n# check if the number of terms is valid\nif nterms &lt;= 0:\n print(\"Please enter a positive integer\")\n# if there is only one term, return n1\nelif nterms == 1:\n print(\"Fibonacci sequence upto\",nterms,\":\")\n print(n1)\n# generate fibonacci sequence\nelse:\n print(\"Fibonacci sequence:\")\n while count &lt; nterms:\n print(n1)\n nth = n1 + n2\n # update values\n n1 = n2\n n2 = nth\n count += 1", "enabled": true, "title": "Fibonacci", "description": "Prints a Fibonacci sequence with a number of terms equal to the input value" }, { "createdAt": "2023-10-10T08:57:53.9771534", "updatedAt": "2023-10-10T08:57:57.5668706", "scriptId": 15, "scriptText": "", "enabled": true, "title": "Empty script", "description": "A simple empty script" }, { "createdAt": "2023-10-10T08:58:26.3159274", "updatedAt": "2023-10-10T08:58:39.4967619", "scriptId": 16, "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")", "enabled": true, "title": "Current date 2", "description": "Print today's date" }]</value>
+    <value>[
+    {
+        "createdAt": "2023-10-10T08:45:33.3050296",
+        "updatedAt": "2023-10-10T08:45:46.1125614",
+        "scriptId": 8,
+        "scriptText": "print('Hello World')\n",
+        "enabled": true,
+        "title": "Say Hello",
+        "description": "The classic Hello World"
+    },
+    {
+        "createdAt": "2023-10-10T08:47:01.6346239",
+        "updatedAt": "2023-10-10T09:09:15.2850476",
+        "scriptId": 9,
+        "scriptText": "print(f'Hello {args[0]}')\n",
+        "enabled": true,
+        "title": "Say hello with parameters",
+        "description": "A function that greets someone by reading the first incoming parameter"
+    },
+    {
+        "createdAt": "2023-10-10T08:47:48.6938207",
+        "updatedAt": "2023-10-10T09:09:49.549322",
+        "scriptId": 10,
+        "scriptText": "print(f'{int(args[0]) + int(args[1])}')\n",
+        "enabled": true,
+        "title": "Sum",
+        "description": "Simple addition of two numbers"
+    },
+    {
+        "createdAt": "2023-10-10T08:49:41.3345518",
+        "updatedAt": "2023-10-10T09:56:09.51229",
+        "scriptId": 11,
+        "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")",
+        "enabled": false,
+        "title": "Disabled script",
+        "description": "A disabled script, just to see how it looks on the list"
+    },
+    {
+        "createdAt": "2023-10-10T08:52:09.0489",
+        "updatedAt": "2023-10-10T08:52:41.4563636",
+        "scriptId": 12,
+        "scriptText": "import os\n\nprint(os.getcwd())\n",
+        "enabled": true,
+        "title": "Triggers an error",
+        "description": "Triggers security error"
+    },
+    {
+        "createdAt": "2023-10-10T08:53:19.3676008",
+        "updatedAt": "2023-10-10T09:25:30.3161507",
+        "scriptId": 13,
+        "scriptText": "import time\n\ntime.sleep(11)\n\nprint(\"done\")",
+        "enabled": true,
+        "title": "Triggers an error 2",
+        "description": "Triggers TimeOut error"
+    },
+    {
+        "createdAt": "2023-10-10T08:55:25.614123",
+        "updatedAt": "2023-10-10T08:57:29.4231649",
+        "scriptId": 14,
+        "scriptText": "# Program to display the Fibonacci sequence up to n-th term\n\nnterms = int(args[0])\n\n# first two terms\nn1, n2 = 0, 1\ncount = 0\n\nif nterms &lt;= 0:\n\tprint(\"Please enter a positive integer\")\nelif nterms == 1:\n\tprint(\"Fibonacci sequence upto\",nterms,\":\")\n\tprint(n1)\n\t# generate fibonacci sequence\nelse:\n\tprint(\"Fibonacci sequence:\")\n\twhile count &lt; nterms:\n\t\tprint(n1)\n\t\tnth = n1 + n2\n\t\t# update values\n\t\tn1 = n2\n\t\tn2 = nth\n\t\tcount += 1\n",
+        "enabled": true,
+        "title": "Fibonacci",
+        "description": "Prints a Fibonacci sequence with a number of terms equal to the input value"
+    },
+    {
+        "deletedAt": "2023-10-10T11:57:53.9771534",
+        "createdAt": "2023-10-10T08:57:53.9771534",
+        "updatedAt": "2023-10-10T08:57:57.5668706",
+        "scriptId": 15,
+        "scriptText": "",
+        "enabled": true,
+        "title": "Empty script",
+        "description": "A simple empty script"
+    },
+    {
+        "createdAt": "2023-10-10T08:58:26.3159274",
+        "updatedAt": "2023-10-10T08:58:39.4967619",
+        "scriptId": 16,
+        "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")",
+        "enabled": true,
+        "title": "Current date 2",
+        "description": "Print today's date"
+    }
+]</value>
   </data>
 </root>

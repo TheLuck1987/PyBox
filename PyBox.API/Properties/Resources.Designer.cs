@@ -61,7 +61,22 @@ namespace PyBox.API.Properties {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a [ { &quot;createdAt&quot;: &quot;2023-10-10T08:45:33.3050296&quot;, &quot;updatedAt&quot;: &quot;2023-10-10T08:45:46.1125614&quot;, &quot;scriptId&quot;: 8, &quot;scriptText&quot;: &quot;print(&apos;Hello World&apos;)\n&quot;, &quot;enabled&quot;: true, &quot;title&quot;: &quot;Say Hello&quot;, &quot;description&quot;: &quot;The classic Hello World&quot; }, { &quot;createdAt&quot;: &quot;2023-10-10T08:45:33.3050296&quot;, &quot;updatedAt&quot;: &quot;2023-10-10T08:45:46.1125614&quot;, &quot;scriptId&quot;: 8, &quot;scriptText&quot;: &quot;print(&apos;Hello World&apos;)\n&quot;, &quot;enabled&quot;: true, &quot;title&quot;: &quot;Say Hello&quot;, &quot;description&quot;: &quot;The classic Hello World&quot; }, { &quot;createdAt&quot;: &quot;2023-10-10T08:47:01.6346239&quot;, &quot;updated [stringa troncata]&quot;;.
+        ///   Cerca una stringa localizzata simile a [
+        ///    {
+        ///        &quot;createdAt&quot;: &quot;2023-10-10T08:45:33.3050296&quot;,
+        ///        &quot;updatedAt&quot;: &quot;2023-10-10T08:45:46.1125614&quot;,
+        ///        &quot;scriptId&quot;: 8,
+        ///        &quot;scriptText&quot;: &quot;print(&apos;Hello World&apos;)\n&quot;,
+        ///        &quot;enabled&quot;: true,
+        ///        &quot;title&quot;: &quot;Say Hello&quot;,
+        ///        &quot;description&quot;: &quot;The classic Hello World&quot;
+        ///    },
+        ///    {
+        ///        &quot;createdAt&quot;: &quot;2023-10-10T08:47:01.6346239&quot;,
+        ///        &quot;updatedAt&quot;: &quot;2023-10-10T09:09:15.2850476&quot;,
+        ///        &quot;scriptId&quot;: 9,
+        ///        &quot;scriptText&quot;: &quot;print(f&apos;Hello {args[0]}&apos;)\n&quot;,
+        ///        &quot;enabled&quot; [stringa troncata]&quot;;.
         /// </summary>
         internal static string Examples {
             get {
