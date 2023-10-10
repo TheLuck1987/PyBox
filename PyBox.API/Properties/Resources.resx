@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Examples" xml:space="preserve">
+    <value>[ { "createdAt": "2023-10-10T08:45:33.3050296", "updatedAt": "2023-10-10T08:45:46.1125614", "scriptId": 8, "scriptText": "print('Hello World')\n", "enabled": true, "title": "Say Hello", "description": "The classic Hello World" }, { "createdAt": "2023-10-10T08:45:33.3050296", "updatedAt": "2023-10-10T08:45:46.1125614", "scriptId": 8, "scriptText": "print('Hello World')\n", "enabled": true, "title": "Say Hello", "description": "The classic Hello World" }, { "createdAt": "2023-10-10T08:47:01.6346239", "updatedAt": "2023-10-10T09:09:15.2850476", "scriptId": 9, "scriptText": "print(f'Hello {args[0]}')\n", "enabled": true, "title": "Say hello with parameters", "description": "A function that greets someone by reading the first incoming parameter" }, { "createdAt": "2023-10-10T08:47:48.6938207", "updatedAt": "2023-10-10T09:09:49.549322", "scriptId": 10, "scriptText": "print(f'{int(args[0]) + int(args[1])}')\n", "enabled": true, "title": "Sum", "description": "Simple addition of two numbers" }, { "createdAt": "2023-10-10T08:49:41.3345518", "updatedAt": "2023-10-10T09:56:09.51229", "scriptId": 11, "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")", "enabled": false, "title": "Disabled script", "description": "A disabled script, just to see how it looks on the list" }, { "createdAt": "2023-10-10T08:52:09.0489", "updatedAt": "2023-10-10T08:52:41.4563636", "scriptId": 12, "scriptText": "import os\n\nprint(os.getcwd())\n", "enabled": true, "title": "Triggers an error", "description": "Triggers security error" }, { "createdAt": "2023-10-10T08:53:19.3676008", "updatedAt": "2023-10-10T09:25:30.3161507", "scriptId": 13, "scriptText": "import time\n\ntime.sleep(11)\n\nprint(\"done\")", "enabled": true, "title": "Triggers an error 2", "description": "Triggers TimeOut error" }, { "createdAt": "2023-10-10T08:55:25.614123", "updatedAt": "2023-10-10T08:57:29.4231649", "scriptId": 14, "scriptText": "# Program to display the Fibonacci sequence up to n-th term\n\nnterms = int(args[0])\n\n# first two terms\nn1, n2 = 0, 1\ncount = 0\n\n# check if the number of terms is valid\nif nterms &lt;= 0:\n print(\"Please enter a positive integer\")\n# if there is only one term, return n1\nelif nterms == 1:\n print(\"Fibonacci sequence upto\",nterms,\":\")\n print(n1)\n# generate fibonacci sequence\nelse:\n print(\"Fibonacci sequence:\")\n while count &lt; nterms:\n print(n1)\n nth = n1 + n2\n # update values\n n1 = n2\n n2 = nth\n count += 1", "enabled": true, "title": "Fibonacci", "description": "Prints a Fibonacci sequence with a number of terms equal to the input value" }, { "createdAt": "2023-10-10T08:57:53.9771534", "updatedAt": "2023-10-10T08:57:57.5668706", "scriptId": 15, "scriptText": "", "enabled": true, "title": "Empty script", "description": "A simple empty script" }, { "createdAt": "2023-10-10T08:58:26.3159274", "updatedAt": "2023-10-10T08:58:39.4967619", "scriptId": 16, "scriptText": "import datetime\ntoday = datetime.datetime.now().strftime('%m/%d/%Y')\nprint (f\"Today's date is {today}\")", "enabled": true, "title": "Current date 2", "description": "Print today's date" }]</value>
+  </data>
+</root>
