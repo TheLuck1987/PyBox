@@ -16,4 +16,4 @@ Requisiti:
 Note generali:
   - Questa versione è puramente dimostrativa ed è servita anche a me per studiare e approfondire (anche se abbastanza marginalmente) concetti, tecniche e frameworks a me poco conosciuti.
   - Anche se l'applicazione richiedeva un semplice database contenente una singola tabella, ho utilizzato EntityFramework (che non avevo mai utilizzato)
-  - Questa è stata la prima volta in cui utilizzavo Blazor e Razor quindi, molto probabilmente, non ho seguito tutte le Best Practice al 100% e il tutto potrebbe essere sicuramente migliorato, semplificato e ottimizzato.
+  - Questa è stata la prima volta in cui ho utilizzato Blazor e Razor quindi, molto probabilmente, non ho seguito tutte le Best Practice al 100% e il tutto potrebbe essere sicuramente migliorato, semplificato e ottimizzato.
